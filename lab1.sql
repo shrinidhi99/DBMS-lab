@@ -70,7 +70,7 @@ INSERT into courseReg values("CO203", "S109");
 select * from courseReg where sid="S110";
 
 -- Question vi)
-delete from studentInfo where sid="S109"
+delete from studentInfo where sid="S109";
 
 -- Question vii)
 alter table studentInfo add column hosteller char(3);
