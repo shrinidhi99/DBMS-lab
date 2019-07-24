@@ -4,7 +4,7 @@
 __Lab programs done in DBMS lab__
 
 
-`Lab course of semester V`
+`Semester V Lab Course`
 
 
->MySql is the database used for solving the problems.
+>MySQL is the language used to design, manipulate database and for any query.
