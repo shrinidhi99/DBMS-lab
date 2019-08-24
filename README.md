@@ -6,6 +6,10 @@ __Lab programs done in DBMS lab__
 
 `Semester V Lab Course`
 
+```java
+complete lab 2 questions
+```
+
 
 >MySQL is the language used to design, manipulate database and for any query.
 ---------------------------------------------------------------------------
