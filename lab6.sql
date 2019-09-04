@@ -38,14 +38,14 @@ select Books.Book_name from Books where Books.Book_Id not in (select Sales.Book_
 -- ii)
 select distinct Books.Book_name from Books left join Sales on Books.Book_Id = Sales.Book_Id where Sales.Quantity_Sold is null;
 -- iii)
-select Book_Id, (select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id) Quantity from Books;
+select Book_name, (select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id) Quantity from Books;
 -- iv)
 select Book_name from Books where Price = (select distinct Price from Books order by Price desc limit 3, 1);
 -- v) (still need to retrieve book name)
-create table R as select (select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id ) Quantity from Books;
-select Quantity from R where Quantity > (select min(Quantity) from R);
+create table T as select Books.Book_name, (select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id) Quantity from Books;
+select Book_name, Quantity from T where Quantity > (select min(Quantity) from T);
 -- select Books.Book_name from Books join Sales on Books.Book_Id = Sales.Book_Id where Sales.Quantity_Sold > (select min(select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id));
-
+-- select Books.Book_name from Books join Sales on Books.Book_Id = Sales.Book_Id where (select sum(Sales.Quantity_Sold) from Sales where Sales.Book_Id = Books.Book_Id) > 4;
 -- vi)
 select Book_name from Books where  Books.Number_of_Pages > (select max(Books.Number_of_Pages) from Books where Books.Book_name like 'O%');
 -- vii)
