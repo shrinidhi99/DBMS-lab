@@ -6,34 +6,35 @@ __Lab programs done in DBMS lab__
 
 `Semester V Lab Course`
 
-```java
-complete lab 2 questions
-```
+---
+* [ ] complete lab 2 questions
+---
+
 
 
 >MySQL is the language used to design, manipulate database and for any query.
 ---------------------------------------------------------------------------
 ### Step 1 - Installing MySQL
-```java
+```shell
 
     sudo apt-get update
     sudo apt-get install mysql-server
 ```
 ---------------------------------------------------------------------------
 ### Step 2 — Configuring MySQL
-```java
+```shell
     mysql_secure_installation
 
 ```
 ---------------------------------------------------------------------------
 ### Step 3 — Testing MySQL
-```java
+```shell
     systemctl status mysql.service
 ```
 >If MySQL isn't running, you can start it with `sudo systemctl start mysql`.
 ---------------------------------------------------------------------------
 ### Finally
-```java
+```shell
     mysqladmin -p -u root version
     or
     mysql -u root -p (if you are in root directory)
