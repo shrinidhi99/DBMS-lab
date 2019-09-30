@@ -52,15 +52,15 @@ insert into student8 values(4, "Disha", "English", 'F');
 
 DELIMITER $$
 
-create procedure query3(in gender char(1))
+create procedure query4(in gender char(1))
 BEGIN
     select count(gender) from student8 where student8.gender = gender;
 END $$
  
 DELIMITER ;
 
-call query3('M');
-call query3('F');
+call query4('M');
+call query4('F');
 
 -- query 5
 
