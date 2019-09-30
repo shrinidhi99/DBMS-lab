@@ -51,7 +51,7 @@ insert into student8 values(3, "Chaitany", "ML", 'M');
 insert into student8 values(4, "Disha", "English", 'F');
 
 DELIMITER $$
- 
+
 create procedure query3(in gender char(1))
 BEGIN
     select count(gender) from student8 where student8.gender = gender;

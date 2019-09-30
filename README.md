@@ -10,7 +10,9 @@ __Lab programs done in DBMS lab__
 * [ ] complete lab 2 questions
 ---
 
+* lab 7 was a revision lab
 
+---
 
 >MySQL is the language used to design, manipulate database and for any query.
 ---------------------------------------------------------------------------
