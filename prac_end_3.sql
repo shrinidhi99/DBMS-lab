@@ -113,7 +113,22 @@ create view query4 as select Store_ID, sum(Total_Amount) as Total from Purchase 
 select * from query4;
 
 -- query 5
--- trigger
+create table PurchaseTrigger (Store_ID varchar(4), Customer_ID varchar(4), Date_of_purchase date, Total_Amount float);
+
+drop trigger if exists update_amount;
+delimiter $$
+create trigger update_amount
+after update on Purchase
+for each row
+begin
+if (not(old.Total_Amount * 3 - new.Total_Amount)) then
+    insert into PurchaseTrigger values (old.Store_ID, old.Customer_ID, old.Date_of_purchase, old.Total_Amount);
+end if;
+end$$
+delimiter ;
+
+update Purchase set Total_Amount = 3 * Total_Amount where Store_ID = "S14";
+select * from PurchaseTrigger;
 
 -- query 6
 select Customer.Customer_Name, Customer.Customer_ID, count(Purchase.Customer_ID) as cnt from Customer join Purchase on Customer.Customer_ID = Purchase.Customer_ID group by Customer_ID order by cnt desc limit 1;

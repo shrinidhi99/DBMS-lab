@@ -116,3 +116,16 @@ end$$
 delimiter ;
 
 call query6();
+
+-- query 7
+create table HospitalTrigger (Hospital_ID varchar(4) primary key, Hospital_Name varchar(50), City varchar(50), Pincode int(6), No_of_beds int(3));
+
+create trigger hospital_delete
+before delete on Hospital
+for each row
+insert into HospitalTrigger values (old.Hospital_ID, old.Hospital_Name, old.City, old.Pincode, old.No_of_beds);
+
+delete from Treatment where Hospital_ID = "H25";
+delete from Hospital where Hospital_ID = "H25";
+
+-- query 8

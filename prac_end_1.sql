@@ -120,10 +120,55 @@ delimiter ;
 call query5("CSE");
 
 -- query 6
-create view query6 as select Courses.Course_Name from Courses where Course_ID not in (select distinct(Course_ID) from Offerings);
+create view CINFO as select Courses.Course_Name from Courses where Course_ID not in (select distinct(Course_ID) from Offerings);
 
 -- query 7
--- triggers
+alter table Instructor add column salary float;
 
+create trigger salary_insert
+before insert on Instructor
+for each row
+set new.salary = 2 * new.salary;
+
+insert into Instructor values (16, "Kesh", "M", 30, "Blr", 11, 25);
 -- query 8
 -- cursors
+
+delimiter $$
+create procedure query8(in Name varchar(50), out cnames varchar(1000))
+begin
+DECLARE finished INTEGER DEFAULT 0;
+declare temp varchar(50) DEFAULT "";
+declare curCourse cursor for select Courses.Course_Name from Courses where Courses.Course_ID in (select Offerings.Course_ID from Offerings join Instructor on Offerings.Instructor_Id = Instructor.Instructor_Id where Instructor.Name = Name);
+DECLARE CONTINUE HANDLER
+    FOR NOT FOUND SET finished = 1;
+open curCourse;
+getCourses: loop
+    fetch curCourse into temp;
+    IF finished = 1 THEN
+            LEAVE getCourses;
+    END IF;
+    set cnames = concat(temp, ";", cnames);
+end loop getCourses;
+close curCourse;
+end$$
+delimiter ;
+
+call query8("Shria", @cnames);
+select @cnames;
+
+
+
+-- create trigger courses_insert
+-- before insert on Courses
+-- for each row
+-- set new.Course_Name = upper(new.Course_Name);
+
+-- insert into Courses values (111, "calculus");
+
+-- create trigger courses_update
+-- before update on Courses
+-- for each row
+-- set new.Course_Name = lower(new.Course_Name);
+
+-- update Courses set Course_Name = "IOT" where Course_ID = 16;
