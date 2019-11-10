@@ -102,3 +102,28 @@ delimiter ;
 call query2();
 
 -- query 3
+select Instructor.Name from Instructor where Instructor.Instructor_Id in (select Offerings.Instructor_Id from Offerings join Courses on Offerings.Course_ID = Courses.Course_ID where Courses.Course_Name = "Semiconductors");
+
+-- qeury 4
+select Instructor.Name, count(Instructor.Instructor_Id) as cnt from Instructor join Offerings on Instructor.Instructor_Id = Offerings.Instructor_Id group by Instructor.Instructor_Id order by cnt asc;
+
+-- query 5
+delimiter $$
+
+create procedure query5(in Department_Name varchar(50))
+begin
+    select Place from Location where Department_ID = (select Department_ID from Department where Department.Department_Name = Department_Name);
+end $$
+
+delimiter ;
+
+call query5("CSE");
+
+-- query 6
+create view query6 as select Courses.Course_Name from Courses where Course_ID not in (select distinct(Course_ID) from Offerings);
+
+-- query 7
+-- triggers
+
+-- query 8
+-- cursors
