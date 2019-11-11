@@ -135,13 +135,13 @@ insert into Instructor values (16, "Kesh", "M", 30, "Blr", 11, 25);
 -- cursors
 
 delimiter $$
-create procedure query8(in Name varchar(50), out cnames varchar(1000))
+create procedure query8(in Name varchar(50), inout cnames varchar(1000))
 begin
-DECLARE finished INTEGER DEFAULT 0;
+declare finished integer DEFAULT 0;
 declare temp varchar(50) DEFAULT "";
 declare curCourse cursor for select Courses.Course_Name from Courses where Courses.Course_ID in (select Offerings.Course_ID from Offerings join Instructor on Offerings.Instructor_Id = Instructor.Instructor_Id where Instructor.Name = Name);
-DECLARE CONTINUE HANDLER
-    FOR NOT FOUND SET finished = 1;
+declare continue HANDLER
+    for not FOUND set finished = 1;
 open curCourse;
 getCourses: loop
     fetch curCourse into temp;
@@ -154,8 +154,35 @@ close curCourse;
 end$$
 delimiter ;
 
+set @cnames = "";
 call query8("Shria", @cnames);
 select @cnames;
+
+
+-- delimiter $$
+-- create procedure course_names(in i_name varchar(10), inout course_list varchar(1000)) 
+-- begin declare c_name varchar(1000) default ""; 
+-- declare final int default 0; 
+-- declare cnames cursor for select Courses.Course_Name from Instructor natural join Courses natural join Offerings where Name = i_name; 
+-- declare continue handler for not found set final = 1; 
+-- open cnames; 
+-- getCnames: Loop fetch cnames into c_name; 
+-- if final = 1 then leave getCnames; 
+-- end if; 
+-- set course_list = concat(c_name, ";", course_list); 
+-- end loop getCnames; 
+-- close cnames; 
+-- end$$
+
+-- delimiter ;
+
+-- set @course_list = "";
+-- call course_names("Shria", @course_list);
+-- select @course_list;
+
+
+
+
 
 
 

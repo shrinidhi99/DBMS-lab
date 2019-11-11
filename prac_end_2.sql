@@ -129,3 +129,35 @@ delete from Treatment where Hospital_ID = "H25";
 delete from Hospital where Hospital_ID = "H25";
 
 -- query 8
+drop procedure query8;
+delimiter $$
+
+create procedure query8(in Hospital_ID varchar(4), inout info varchar(10000))
+begin
+declare finished integer default 0;
+declare temp_ID varchar(4) default "";
+declare temp_Name varchar(50) default "";
+declare temp_Gender char(1) default "";
+declare temp_age int(3) default 0;
+declare cursor_name cursor for select Patient.Patient_ID, Patient.Patient_Name, Patient.Patient_Gender, Patient.Patient_Age from Patient join Treatment on Patient.Patient_ID = Treatment.Patient_ID where Treatment.Hospital_ID = Hospital_ID;
+declare continue handler
+    for not found set finished = 1;
+open cursor_name;
+getDetails: loop
+    fetch cursor_name into temp_ID, temp_Name, temp_Gender, temp_age;
+    if finished = 1 then
+        leave getDetails;
+    end if;
+    set info = concat(temp_ID,";",info);
+    set info = concat(temp_Name,";",info);
+    set info = concat(temp_Gender,";",info);
+    set info = concat(temp_age,"|||",info);
+end loop getDetails;
+close cursor_name;
+end$$
+
+delimiter ;
+
+set @info = "";
+call query8("H11", @info);
+select @info;

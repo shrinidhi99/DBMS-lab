@@ -139,3 +139,32 @@ alter table Enroll drop foreign key fk2;
 
 -- query 8
 -- cursor
+drop procedure query8;
+delimiter $$
+create procedure query8(in Store_ID varchar(4), inout purchases varchar(1000))
+begin
+declare finished integer default 0;
+declare temp_SID varchar(4) default "";
+declare temp_CID varchar(4) default "";
+declare temp_amount float default 0;
+declare cursor_name cursor for select Purchase.Store_ID, Purchase.Customer_ID, Purchase.Total_Amount from Purchase where Purchase.Store_ID = Store_ID;
+declare continue handler 
+    for not found set finished = 1;
+open cursor_name;
+getDetails: loop
+    fetch cursor_name into temp_SID, temp_CID, temp_amount;
+    if finished = 1 then
+        leave getDetails;
+    end if;
+    set purchases = concat(temp_SID,";",purchases);
+    set purchases = concat(temp_CID,";",purchases);
+    set purchases = concat(temp_amount,";",purchases);
+end loop getDetails;
+close cursor_name;
+end$$
+
+delimiter ;
+
+set @purchases = "";
+call query8("S1", @purchases);
+select @purchases;
