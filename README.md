@@ -6,14 +6,6 @@ __Lab programs done in DBMS lab__
 
 `Semester V Lab Course`
 
----
-* [ ] complete lab 2 questions
----
-
-* lab 7 was a revision lab
-
----
-
 >MySQL is the language used to design, manipulate database and for any query.
 ---------------------------------------------------------------------------
 ### Step 1 - Installing MySQL
