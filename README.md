@@ -4,7 +4,7 @@
 __Lab programs done in DBMS lab__
 
 
-`Semester V Lab Course`
+`Semester V Lab Course (Odd semester 2019)`
 
 >MySQL is the language used to design, manipulate database and for any query.
 ---------------------------------------------------------------------------
